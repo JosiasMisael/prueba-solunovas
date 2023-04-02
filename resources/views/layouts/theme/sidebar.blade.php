@@ -32,7 +32,7 @@
                                 <rect x="3" y="14" width="7" height="7"></rect>
                             </svg>
                         </div>
-                        <span>Catalogo</span>
+                        <span>Catálogo</span>
                     </div>
                 </a>
             </li>
@@ -53,7 +53,7 @@
                 </a>
             </li>
             <li class="">
-                <a href="#pages" data-active="false" class="menu-toggle">
+                <a href="{{route('reportes')}}" data-active="false" class="menu-toggle">
                     <div class="base-menu">
                         <div class="base-icons">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"

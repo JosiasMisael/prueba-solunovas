@@ -44,7 +44,6 @@ class UserComponent extends Component
     public function render()
     {
 
-
         $users = User::Permitido($this->search)->paginate($this->pagination);
 
         $roles = Role::where('status', 1)->orderBy('name', 'desc')->get();

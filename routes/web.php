@@ -1,12 +1,11 @@
 <?php
 
-use App\Http\Livewire\AsignarComponent;
+use App\Http\Controllers\PruebaController;
 use App\Http\Livewire\CatalogoHorasComponent;
-use App\Http\Livewire\PermisoComponent;
 use App\Http\Livewire\RegistroHoraComponent;
+use App\Http\Livewire\ReporteComponent;
 use App\Http\Livewire\RoleComponent;
 use App\Http\Livewire\UserComponent;
-use App\Models\CatalogoHora;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -24,6 +23,7 @@ use Illuminate\Support\Facades\Route;
     return view('welcome');
 });*/
 
+Route::get('informacion', [App\Http\Controllers\PruebaController::class, 'prueba']);
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::group(['middleware' => 'auth'], function () {
 
@@ -31,6 +31,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('roles', RoleComponent::class)->name('roles');
     Route::get('user', UserComponent::class)->name('users');
     Route::get('registro-horas', RegistroHoraComponent::class)->name('registroHoras');
+    Route::get('reportes', ReporteComponent::class)->name('reportes');
 
 });
 Auth::routes();

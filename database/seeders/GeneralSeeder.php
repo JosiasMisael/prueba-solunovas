@@ -56,5 +56,19 @@ class GeneralSeeder extends Seeder
         $catalogo->horas_estimadas=2;
         $catalogo->descripcion ='Verificacion del funcionamiento adecuado';
         $catalogo->save();
+
+        $catalogo = new CatalogoHora;
+        $catalogo->tarea ='Tarea 1';
+        $catalogo->horas_estimadas=7;
+        $catalogo->descripcion ='Descripcion de tareas 1';
+        $catalogo->save();
+
+        $catalogo = new CatalogoHora;
+        $catalogo->tarea ='Tarea 2';
+        $catalogo->horas_estimadas=11;
+        $catalogo->descripcion ='Descripcion de tareas 2';
+        $catalogo->save();
+
+
     }
 }

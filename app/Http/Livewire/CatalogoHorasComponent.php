@@ -29,7 +29,7 @@ class CatalogoHorasComponent extends Component
     public function mount()
     {
         $this->pageTitle = 'Listado';
-        $this->componentName = 'Categorias';
+        $this->componentName = 'Catálogos';
     }
 
     public function updatingsearch()

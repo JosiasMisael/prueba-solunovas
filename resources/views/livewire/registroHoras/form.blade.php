@@ -2,7 +2,7 @@
 <form>
 <div class="row">
     <div class="col-md-6">
-        <label class="form-label">Catalogo de horas</label>
+        <label class="form-label">Catálogo de horas</label>
         <div class="input-group">
             <select class="form-control" wire:model='catalogo' >
                 <option value="Elegir" selected>seleccione</option>

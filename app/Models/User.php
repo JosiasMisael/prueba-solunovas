@@ -42,6 +42,11 @@ class User extends Authenticatable
     public function registros(){
         return $this->hasMany(RegistroHora::class);
     }
+/*
+    public function roles()
+{
+    return $this->belongsToMany('Spatie\Permission\Models\Role');
+}*/
 
     public function setPasswordAttribute($password)
     {
