@@ -85,7 +85,7 @@
                     .then((willDelete) => {
                         if (willDelete) {
                             window.livewire.emit('delete', id)
-                            swal("usero " + name + " se ha eliminado", {
+                            swal("usuario " + name + " se ha eliminado", {
                                 icon: "success",
                             });
                         }
@@ -95,7 +95,7 @@
             window.livewire.on('added-user', msg => {
                 $('#theModal').modal('hide')
                 swal({
-                    title: 'usero ' + msg + ' agregado',
+                    title: 'usuario ' + msg + ' agregado',
                     text: '',
                     icon: 'success',
                 })
@@ -104,7 +104,7 @@
             window.livewire.on('updated-user', msg => {
                 $('#theModal').modal('hide')
                 swal({
-                    title: 'usero ' + msg + ' actualizado',
+                    title: 'usuario ' + msg + ' actualizado',
                     text: '',
                     icon: 'success',
                 })

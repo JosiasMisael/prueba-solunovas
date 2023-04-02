@@ -3,7 +3,10 @@
 namespace App\Http\Livewire;
 
 use App\Http\Requests\UserRequest;
+use App\Mail\CredencialesMail;
 use App\Models\User;
+use App\Providers\UserCreado;
+use Illuminate\Support\Facades\Mail;
 use Livewire\Component;
 use Livewire\WithPagination;
 use Spatie\Permission\Models\Role;
@@ -14,7 +17,7 @@ class UserComponent extends Component
 
     protected $paginationTheme = 'bootstrap';
     public $nombre, $correo,  $role, $estado,  $search = '', $selected_id, $pageTitle, $componentName;
-    private $pagination = 5;
+    private $pagination = 10;
     protected $listeners = ['delete'];
 
     protected function rules(){
@@ -53,13 +56,15 @@ class UserComponent extends Component
 
     public function store(){
         $this->validate();
-       $contraseña = Str::random(8);
+       $password = Str::random(8);
         $user=User::create([
               'name'=>$this->nombre,
               'email'=>$this->correo,
-              'password'=>$contraseña,
+              'password'=>$password,
           ]);
          $user->assignRole($this->role);
+         UserCreado::dispatch($user, $password);
+       //  Mail::to($user->email)->send(New CredencialesMail($user->name, $user->email, $contraseña));
           $this->reserUI();
           $this->emit('added-user', $user->name);
       }

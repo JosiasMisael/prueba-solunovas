@@ -10,15 +10,16 @@ use Illuminate\Queue\SerializesModels;
 class CredencialesMail extends Mailable
 {
     use Queueable, SerializesModels;
-
+    public $user, $password;
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($user, $password)
     {
-        //
+        $this->user = $user;
+        $this->password = $password;
     }
 
     /**
@@ -28,6 +29,7 @@ class CredencialesMail extends Mailable
      */
     public function build()
     {
-        return $this->view('view.name');
+
+       return $this->from('supervisorA@gmail.com')->markdown('email.credenciales')->subject('Tus credenciales de acceso a ' . config('app.name'));
     }
 }
