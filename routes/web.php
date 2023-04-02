@@ -27,15 +27,16 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('informacion', [App\Http\Controllers\PruebaController::class, 'prueba']);
 //Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::get('/', ChartComponent::class)->name('home');
 Route::group(['middleware' => 'auth'], function () {
 
+    Route::get('/', ChartComponent::class)->name('home');
     Route::get('catalogos', CatalogoHorasComponent::class)->name('catalogos');
     Route::get('roles', RoleComponent::class)->name('roles');
     Route::get('user', UserComponent::class)->name('users');
     Route::get('registro-horas', RegistroHoraComponent::class)->name('registroHoras');
     Route::get('reportes', ReporteComponent::class)->name('reportes');
     Route::get('report/excel/{user}/{type}',[ExportController::class, 'reporteExcel']);
+    Route::get('report/excelPro/{user}/{type}',[ExportController::class, 'reporteExcelHoras']);
 });
 Auth::routes();
 

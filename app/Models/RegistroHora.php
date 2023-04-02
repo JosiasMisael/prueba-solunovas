@@ -24,6 +24,7 @@ class RegistroHora extends Model
 
     public function scopePermitido($query)
     {
+        if (Auth::check() && Auth::user() != null) {
         if (auth()->user()->hasRole('Supervisor')) {
             return $query->with(['catalogo', 'user'])
                 ->where('estado', true)
@@ -34,9 +35,11 @@ class RegistroHora extends Model
             ->where('user_id', auth()->id())
             ->orderBy('id', 'desc');
     }
+    }
 
     public function scopeGrafica($query, $mesActual)
     {
+        if (Auth::check() && Auth::user() != null) {
         if (auth()->user()->hasRole('Supervisor')) {
 
             return $query->with(['user' => function ($query) {
@@ -47,15 +50,18 @@ class RegistroHora extends Model
                     ->where('estado_horas', 2);
             }
 
+            if (auth()->user()->hasRole('Empleado')) {
+                return $query->with(['user' => function ($query) {
+                    return $query->role('Empleado')->select('id', 'name');
+                }])
+                    ->select('user_id', 'cantidad_horas', DB::raw('DATE_FORMAT(fecha, "%d/%m/%Y") as dia'))
+                    ->where('user_id', auth()->id())
+                    ->whereMonth('fecha', $mesActual)
+                    ->where('estado_horas', 2);
+            }
+        }
+            }
 
-        return $query->with(['user' => function ($query) {
-            return $query->role('Empleado')->select('id', 'name');
-        }])
-            ->select('user_id', 'cantidad_horas', DB::raw('DATE_FORMAT(fecha, "%d/%m/%Y") as dia'))
-            ->where('user_id', auth()->id())
-            ->whereMonth('fecha', $mesActual)
-            ->where('estado_horas', 2);
-    }
 
     public function scopeReportes($query, $reportType, $userId){
         if(auth()->user()->hasRole('Supervisor')){

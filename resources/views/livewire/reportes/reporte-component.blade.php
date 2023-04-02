@@ -47,8 +47,13 @@
                             </div>
                         </div>
                         <div class="col-sm-12 mt-2">
-                            <a href="{{ url('report/excel'.'/'.$userId . '/' . $reportType) }}" class="btn btn-dark btn-block {{ count($users) < 1 ? 'disabled' : ''}}" target="_blank">Exportar a Excel</a>
+                            <a href="{{ url('report/excel'.'/'.$userId . '/' . $reportType) }}" class="btn btn-dark btn-block {{ count($data) < 1 ? 'disabled' : ''}}" target="_blank">Exportar a Excel</a>
                         </div>
+                        @role('Empleado')
+                        <div class="col-sm-12 mt-2">
+                            <a href="{{ url('report/excelPro'.'/'.$userId . '/' . $reportType) }}" class="btn btn-dark btn-block {{ count($data) < 1 ? 'disabled' : ''}}" target="_blank">{{$reportType==2?'Exportar a Excel horas registradas detalladamente':'Exportar a Excel horas pagadas detalladamente' }} </a>
+                        </div>
+                        @endrole
                     </div>
                 </div>
                 <div class="col-12 col-md-9">

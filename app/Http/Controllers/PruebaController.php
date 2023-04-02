@@ -23,9 +23,8 @@ class PruebaController extends Controller
         $data= RegistroHora::with(['user'=>function($query){
             return $query->role('Empleado')->select('id','name');
         }])
-        ->select( 'user_id','cantidad_horas' ,DB::raw('DATE_FORMAT(fecha, "%d/%m/%Y") as dia'))
-        ->whereMonth('fecha', 4)
-        ->where('estado_horas',2)
+        ->select( 'user_id','cantidad_horas','estado_horas' ,DB::raw('DATE_FORMAT(fecha, "%d/%m/%Y") as dia'))
+        ->whereMonth('fecha',$fechaActual )
         ->get();
 
          return $data;
