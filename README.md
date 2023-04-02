@@ -1,3 +1,6 @@
+# Prueba Tecnica  -Grupo Perinola -
+
+sistema para llevar que lleva el control de horas de los empleados que laboran de forma freelance
 ### Clonar el Repositorio de git
 
 ```bash
@@ -30,13 +33,11 @@ Luego es necesario modificar los valores de las variables de entorno para adecua
 
 ### Migrar la Base de Datos
 
-el proyecto ya tiene los modelos, migraciones y seeders generados. Entonces lo único que nos hace falta es ejecutar la migración y ejecutar el siguiente comando:
+el proyecto ya tiene los modelos, migraciones y seeders generados.
 
 ```bash
 php artisan migrate:fresh --seed
 ```
 
-- **migrate:fresh** ejecuta la migración **eliminando** todas las tablas y volviendo a generarlas.
-- **--seed** ejecuta los Seeders habilitados  
 
-### Nota: Para poder agregar nuevos usuarios es necesario tener una cuenta **https://mailtrap.io** donde se enviaran las credenciales de acceso. 
+### Nota: Crear una cuenta en **https://mailtrap.io** y configurar las credenciales en el archio **.env.** para poder enviar credenciales de nuevos usuarios.
