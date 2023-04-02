@@ -25,7 +25,11 @@ class ReporteComponent extends Component
     {
         $this->pageTitle = 'Filtros';
         $this->tableTitle = 'Informe de horas registradas y pagadas';
-        $this->userId=0;
+        if (auth()->user()->hasRole('Empleado')) {
+            $this->userId = auth()->id();
+        }else{
+            $this->userId=0;
+        }
         $this->reportType = 0;
     }
 
@@ -34,49 +38,8 @@ class ReporteComponent extends Component
 
         $users = User::role('Empleado')->get(['id', 'name']);
 
-        if ($this->reportType == 0 || $this->reportType == 1 && $this->userId == 0) {
-            $data = RegistroHora::with(['user' => function ($query) {
-                return $query->role('Empleado');
-            }])
-                ->select('user_id', DB::raw('monthName(fecha) AS mes'), DB::raw('SUM(cantidad_horas) AS horas'))
-                ->where('estado_horas', '=', 2)
-                ->groupBy('user_id', 'mes')
-                ->orderBy('mes', 'asc')
-                ->paginate($this->pagination);
-        }
-        if ($this->reportType == 2 && $this->userId == 0) {
-            $data = RegistroHora::with(['user' => function ($query) {
-                return $query->role('Empleado');
-            }])
-                ->select('user_id', DB::raw('monthName(fecha) AS mes'), DB::raw('SUM(cantidad_horas) AS horas'))
-                ->where('estado_horas', '=', 1)
-                ->groupBy('user_id', 'mes')
-                ->orderBy('mes', 'asc')
-                ->paginate($this->pagination);
-        } else if ($this->userId > 0) {
+        $data = RegistroHora::Reportes($this->reportType, $this->userId)->paginate($this->pagination);
 
-            if ($this->reportType == 1) {
-                $data = RegistroHora::with(['user' => function ($query) {
-                    return $query->role('Empleado');
-                }])
-                    ->select('user_id', DB::raw('monthName(fecha) AS mes'), DB::raw('SUM(cantidad_horas) AS horas'))
-                    ->where('estado_horas', '=', 2)
-                    ->where('user_id', $this->userId)
-                    ->groupBy('user_id', 'mes')
-                    ->orderBy('mes', 'asc')
-                    ->paginate($this->pagination);
-            } else if ($this->reportType == 2) {
-                $data = RegistroHora::with(['user' => function ($query) {
-                    return $query->role('Empleado');
-                }])
-                    ->select('user_id', DB::raw('monthName(fecha) AS mes'), DB::raw('SUM(cantidad_horas) AS horas'))
-                    ->where('estado_horas', '=', 1)
-                    ->where('user_id', $this->userId)
-                    ->groupBy('user_id', 'mes')
-                    ->orderBy('mes', 'asc')
-                    ->paginate($this->pagination);
-            }
-        }
         return view('livewire.reportes.reporte-component', compact('data', 'users'))
             ->extends('layouts.theme.app')
             ->section('content');

@@ -52,6 +52,7 @@
                     </div>
                 </a>
             </li>
+            @endrole
             <li class="">
                 <a href="{{route('reportes')}}" data-active="false" class="menu-toggle">
                     <div class="base-menu">
@@ -67,7 +68,6 @@
                     </div>
                 </a>
             </li>
-            @endrole
             <li class="">
                 <a href="{{ route('users') }}" data-active="false" class="menu-toggle">
                     <div class="base-menu">

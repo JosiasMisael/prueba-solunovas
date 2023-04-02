@@ -10,10 +10,11 @@
                <div class="row">
                 <div class="col-sm-12 col-md-3">
                     <div class="row">
+                        @role('Supervisor')
                         <div class="col-sm-12">
                             <h6>Elige un usuario</h6>
                             <div class="form-group">
-                                <select wire:model="userId" class="form-control ">
+                                <select wire:model="userId" class="form-control  ">
                                     <option value="0">Todos</option>
                                     @foreach ($users as $user)
                                  <option value="{{$user->id}}">{{$user->name}}</option>
@@ -21,6 +22,20 @@
                                 </select>
                             </div>
                         </div>
+                        @endrole
+                        @role('Empleado')
+                        <div class="col-sm-12">
+                            <h6>Elige un usuario</h6>
+                            <div class="form-group">
+                                <select wire:model="userId" class="form-control" disabled>
+                                    <option value="0">Todos</option>
+                                    @foreach ($users as $user)
+                                 <option value="{{$user->id}}">{{$user->name}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        @endrole
                         <div class="col-sm-12">
                             <h6>Tipo de reporte</h6>
                             <div class="form-group">

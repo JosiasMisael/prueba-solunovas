@@ -56,5 +56,73 @@ class RegistroHora extends Model
             ->whereMonth('fecha', $mesActual)
             ->where('estado_horas', 2);
     }
+
+    public function scopeReportes($query, $reportType, $userId){
+        if(auth()->user()->hasRole('Supervisor')){
+            if ($reportType == 0 || $reportType == 1 && $userId == 0) {
+                return $query->with(['user' => function ($query) {
+                    return $query->role('Empleado');
+                }])
+                    ->select('user_id', DB::raw('monthName(fecha) AS mes'), DB::raw('SUM(cantidad_horas) AS horas'))
+                    ->where('estado_horas', '=', 2)
+                    ->groupBy('user_id', 'mes')
+                    ->orderBy('mes', 'asc');
+            }
+            if ($reportType == 2 && $userId == 0) {
+                return $query->with(['user' => function ($query) {
+                    return $query->role('Empleado');
+                }])
+                    ->select('user_id', DB::raw('monthName(fecha) AS mes'), DB::raw('SUM(cantidad_horas) AS horas'))
+                    ->where('estado_horas', '=', 1)
+                    ->groupBy('user_id', 'mes')
+                    ->orderBy('mes', 'asc');
+            } else if ($userId > 0) {
+
+                if ($reportType == 1) {
+                    return $query->with(['user' => function ($query) {
+                        return $query->role('Empleado');
+                    }])
+                        ->select('user_id', DB::raw('monthName(fecha) AS mes'), DB::raw('SUM(cantidad_horas) AS horas'))
+                        ->where('estado_horas', '=', 2)
+                        ->where('user_id', $userId)
+                        ->groupBy('user_id', 'mes')
+                        ->orderBy('mes', 'asc');
+                } else if ($reportType == 2) {
+                    return $query->with(['user' => function ($query) {
+                        return $query->role('Empleado');
+                    }])
+                        ->select('user_id', DB::raw('monthName(fecha) AS mes'), DB::raw('SUM(cantidad_horas) AS horas'))
+                        ->where('estado_horas', '=', 1)
+                        ->where('user_id', $userId)
+                        ->groupBy('user_id', 'mes')
+                        ->orderBy('mes', 'asc');
+                }
+            }
+        }
+        if(auth()->user()->hasRole('Empleado')){
+            if ($reportType == 0 || $reportType == 1 ) {
+                return $query->with(['user' => function ($query) {
+                    return $query->role('Empleado');
+                }])
+                    ->select('user_id', DB::raw('monthName(fecha) AS mes'), DB::raw('SUM(cantidad_horas) AS horas'))
+                    ->where('estado_horas', '=', 2)
+                    ->where('user_id', auth()->id())
+                    ->groupBy('user_id', 'mes')
+                    ->orderBy('mes', 'asc');
+            }
+            else if ($reportType == 2) {
+                return $query->with(['user' => function ($query) {
+                    return $query->role('Empleado');
+                }])
+                    ->select('user_id', DB::raw('monthName(fecha) AS mes'), DB::raw('SUM(cantidad_horas) AS horas'))
+                    ->where('estado_horas', '=', 1)
+                    ->groupBy('user_id', 'mes')
+                    ->where('user_id', auth()->id())
+                    ->orderBy('mes', 'asc');
+            }
+        }
+
+
+    }
 }
 
