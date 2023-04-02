@@ -29,7 +29,6 @@
 </script>
 @stack('scripts')
 
-
 @livewireScripts
 
 <!-- END GLOBAL MANDATORY SCRIPTS -->

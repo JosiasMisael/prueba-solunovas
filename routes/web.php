@@ -3,6 +3,7 @@
 use App\Http\Controllers\ExportController;
 use App\Http\Controllers\PruebaController;
 use App\Http\Livewire\CatalogoHorasComponent;
+use App\Http\Livewire\ChartComponent;
 use App\Http\Livewire\RegistroHoraComponent;
 use App\Http\Livewire\ReporteComponent;
 use App\Http\Livewire\RoleComponent;
@@ -25,7 +26,8 @@ use Illuminate\Support\Facades\Route;
 });*/
 
 Route::get('informacion', [App\Http\Controllers\PruebaController::class, 'prueba']);
-Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+//Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/', ChartComponent::class)->name('home');
 Route::group(['middleware' => 'auth'], function () {
 
     Route::get('catalogos', CatalogoHorasComponent::class)->name('catalogos');
