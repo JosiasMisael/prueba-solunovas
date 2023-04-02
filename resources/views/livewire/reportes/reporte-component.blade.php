@@ -32,9 +32,8 @@
                             </div>
                         </div>
                         <div class="col-sm-12 mt-2">
-                            <a href="" class="btn btn-dark btn-block {{ count($users) < 1 ? 'disabled' : ''}}" target="_blank">Exportar a Excel</a>
+                            <a href="{{ url('report/excel'.'/'.$userId . '/' . $reportType) }}" class="btn btn-dark btn-block {{ count($users) < 1 ? 'disabled' : ''}}" target="_blank">Exportar a Excel</a>
                         </div>
-
                     </div>
                 </div>
                 <div class="col-12 col-md-9">

@@ -1,39 +1,34 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Exports;
 
 use App\Models\RegistroHora;
 use App\Models\User;
-use Illuminate\Foundation\Validation\ValidatesRequests;
+use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\DB;
-use Livewire\Component;
-use Livewire\ComponentConcerns\ValidatesInput;
-use Livewire\WithPagination;
+use Maatwebsite\Excel\Concerns\FromView;
+use Maatwebsite\Excel\Concerns\ShouldAutoSize;
+use Maatwebsite\Excel\Concerns\WithTitle;
+use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
-class ReporteComponent extends Component
+
+class RegistroExport implements  FromView, ShouldAutoSize, WithTitle
 {
+    protected $userId, $reportType;
 
-    use WithPagination;
-
-
-    public $userId, $reportType, $pageTitle, $tableTitle;
-    private $pagination = 10;
-    protected $paginationTheme = 'bootstrap';
-
-
-    public function mount()
-    {
-        $this->pageTitle = 'Filtros';
-        $this->tableTitle = 'Informe de horas registradas y pagadas';
-        $this->userId=0;
-        $this->reportType = 0;
+    public function __construct($userId, $reportType) {
+        $this->userId = $userId;
+        $this->reportType =$reportType;
     }
 
-    public function render()
+    /**
+    * @return \Illuminate\Support\Collection
+    */
+    public function view(): View
     {
+        $data =[];
 
-        $users = User::role('Empleado')->get(['id', 'name']);
-
+            $user = $this->userId > 0 ?  User::findOrFail($this->userId)->name : 'General';
         if ($this->reportType == 0 || $this->reportType == 1 && $this->userId == 0) {
             $data = RegistroHora::with(['user' => function ($query) {
                 return $query->role('Empleado');
@@ -42,7 +37,7 @@ class ReporteComponent extends Component
                 ->where('estado_horas', '=', 2)
                 ->groupBy('user_id', 'mes')
                 ->orderBy('mes', 'asc')
-                ->paginate($this->pagination);
+                ->get();
         }
         if ($this->reportType == 2 && $this->userId == 0) {
             $data = RegistroHora::with(['user' => function ($query) {
@@ -52,9 +47,8 @@ class ReporteComponent extends Component
                 ->where('estado_horas', '=', 1)
                 ->groupBy('user_id', 'mes')
                 ->orderBy('mes', 'asc')
-                ->paginate($this->pagination);
-        } else if ($this->userId > 0) {
-
+                ->get();
+            } else if ($this->userId > 0) {
             if ($this->reportType == 1) {
                 $data = RegistroHora::with(['user' => function ($query) {
                     return $query->role('Empleado');
@@ -64,8 +58,8 @@ class ReporteComponent extends Component
                     ->where('user_id', $this->userId)
                     ->groupBy('user_id', 'mes')
                     ->orderBy('mes', 'asc')
-                    ->paginate($this->pagination);
-            } else if ($this->reportType == 2) {
+                    ->get();
+                } else if ($this->reportType == 2) {
                 $data = RegistroHora::with(['user' => function ($query) {
                     return $query->role('Empleado');
                 }])
@@ -74,11 +68,14 @@ class ReporteComponent extends Component
                     ->where('user_id', $this->userId)
                     ->groupBy('user_id', 'mes')
                     ->orderBy('mes', 'asc')
-                    ->paginate($this->pagination);
+                    ->get();
             }
         }
-        return view('livewire.reportes.reporte-component', compact('data', 'users'))
-            ->extends('layouts.theme.app')
-            ->section('content');
+        return view('reports.horas_report', ['data'=>$data, 'reportType'=>$this->reportType, 'user'=>$user]);
     }
+
+     public function title(): string
+     {
+        return 'Reporte Horas Empleados';
+     }
 }

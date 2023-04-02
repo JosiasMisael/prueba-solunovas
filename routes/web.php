@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ExportController;
 use App\Http\Controllers\PruebaController;
 use App\Http\Livewire\CatalogoHorasComponent;
 use App\Http\Livewire\RegistroHoraComponent;
@@ -32,7 +33,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('user', UserComponent::class)->name('users');
     Route::get('registro-horas', RegistroHoraComponent::class)->name('registroHoras');
     Route::get('reportes', ReporteComponent::class)->name('reportes');
-
+    Route::get('report/excel/{user}/{type}',[ExportController::class, 'reporteExcel']);
 });
 Auth::routes();
 
