@@ -14,7 +14,6 @@ class RoleComponent extends Component
     protected $paginationTheme = 'bootstrap';
     public $nombre, $search = '', $selected_id, $pageTitle, $componentName;
     private $pagination = 10;
-    protected $listeners = ['delete'];
 
     protected function rules(){
         return (new RolRequest())->rules();
@@ -86,17 +85,6 @@ class RoleComponent extends Component
     }
 
 
-    public function delete(Role $rol)
-    {
-        $permissionCount = $rol->permissions->count();
-        if($permissionCount > 0){
-           $this->emit('role-error', 'No se puede eliminar el rol, tiene permisos asociados');
-           return;
-        }else{
-        $rol->status = false;
-        $rol->save();
-        }
-    }
 
     public function reserUI()
     {

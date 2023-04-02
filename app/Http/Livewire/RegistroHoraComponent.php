@@ -19,7 +19,7 @@ class RegistroHoraComponent extends Component
     public $cantidad_horas, $selected_id, $catalogo;
     private $pagination = 10;
     public $registro;
-    protected $listeners = ['delete'];
+    protected $listeners = ['delete','pagar'];
 
   protected function rules(){
 
@@ -50,7 +50,7 @@ class RegistroHoraComponent extends Component
        // $this->authorize('view', $this->registro);
         $registros = RegistroHora::Permitido()->paginate($this->pagination);
 
-        $catalogos = CatalogoHora::where('estado',true)->get(['id','tarea','horas_estimadas']);
+        $catalogos = CatalogoHora::where('estado',true)->where('disponibilidad', true)->get(['id','tarea','horas_estimadas']);
 
         return view('livewire.registroHoras.registro-hora-component', compact('catalogos','registros'))
                ->extends('layouts.theme.app')
@@ -68,6 +68,11 @@ class RegistroHoraComponent extends Component
           'cantidad_horas'=>$this->cantidad_horas,
           'estado_horas'=>1,
         ]);
+
+         $catalogoHoras =CatalogoHora::FindOrFail($registro->catalogo_hora_id);
+         $catalogoHoras->Update([
+            'disponibilidad'=>false
+         ]);
         $this->reserUI();
         $this->emit('added-registro', $registro->name);
     }
@@ -92,9 +97,20 @@ class RegistroHoraComponent extends Component
     }
     public function delete(RegistroHora $registro)
     {
+        $catalogoHoras =CatalogoHora::FindOrFail($registro->catalogo_hora_id);
+        $catalogoHoras->Update([
+            'disponibilidad'=>true
+         ]);
         $registro->estado = false;
         $registro->save();
     }
+
+    public function pagar(RegistroHora $registro)
+    {
+        $registro->estado_horas = 2;
+        $registro->save();
+    }
+
 
     public function reserUI()
     {

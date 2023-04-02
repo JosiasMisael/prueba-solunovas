@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class CatalogoHora extends Model
 {
     use HasFactory;
-    protected $fillable =['tarea','horas_estimadas', 'descripcion', 'estado'];
+    protected $fillable =['tarea','horas_estimadas', 'descripcion','disponibilidad','estado'];
 
     public function registros(){
         return $this->hasMany(RegistroHora::class);

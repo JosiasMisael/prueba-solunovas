@@ -18,6 +18,7 @@ class CreateCatalogoHorasTable extends Migration
             $table->string('tarea');
             $table->integer('horas_estimadas');
             $table->string('descripcion')->nullable();
+            $table->boolean('disponibilidad')->default(true);
             $table->boolean('estado')->default(true);
             $table->timestamps();
         });

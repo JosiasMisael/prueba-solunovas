@@ -10,7 +10,7 @@
                   </span>
                 </span>
             </div>
-            <input type="text" wire:model='tarea' class="form-control" placeholder="nombre tarea">
+            <input type="text" wire:model='tarea' class="form-control" placeholder="Nombre de la tarea">
         </div>
 
         @error('tarea')

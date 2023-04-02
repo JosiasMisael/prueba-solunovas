@@ -6,11 +6,11 @@
                     <b>{{$componentName}} | {{$pageTitle}}</b>
                 </h4>
                 <ul class="tabs tab-pills">
-                    <li>
+                    {{-- <li>
                         <a href="javascript:void(0)" class="tabmenu bg-dark" data-toggle="modal" data-target="#theModal">
                             <i class="fas fa-plus"></i>
                             Agregar</a>
-                    </li>
+                    </li> --}}
                 </ul>
             </div>
             @include('common.searchBox')
@@ -33,9 +33,6 @@
                                 <td class="text-center">
                                     <a href="javascript:void(0)" class="btn btn-dark mtmobile" wire:click='edit({{$role->id}})' title="Editar Rol">
                                         <i class="fas fa-edit"></i>
-                                    </a>
-                                    <a href="javascript:void(0)"  wire:click="$emit('deleteRole', {{ $role->id }}, '{{ $role->name }}')" class="btn btn-dark " title="Eliminar">
-                                        <i class="fas fa-trash"></i>
                                     </a>
                                 </td>
                             </tr>
@@ -75,27 +72,6 @@
                 noty(`Rol ${msg}, actualizado`)
                 $('#theModal').modal('hide')
             });
-
-
-            window.livewire.on('deleteRole', (id, name) => {
-                swal({
-                        title: 'Estas Seguro de eliminar ' + name + ' ?',
-                        text: '',
-                        icon: 'warning',
-                        buttons: true,
-                        dangerMode: true,
-                    })
-                    .then((willDelete) => {
-                        if (willDelete) {
-                            window.livewire.emit('delete', id)
-                            swal("El rol " + name + " se ha eliminado", {
-                                icon: "success",
-                            });
-                        }
-                    });
-            });
-
-
         });
     </script>
 @endpush

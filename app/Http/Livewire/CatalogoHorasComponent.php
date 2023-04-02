@@ -102,6 +102,7 @@ class CatalogoHorasComponent extends Component
     public function reserUI()
     {
         $this->tarea = '';
+        $this->horas_estimadas ='';
         $this->descripcion ='';
         $this->search = '';
         $this->selected_id = 0;

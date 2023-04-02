@@ -7,7 +7,8 @@
                 </h4>
                 <ul class="tabs tab-pills">
                     <li>
-                        <a href="javascript:void(0)" class="tabmenu bg-dark" data-toggle="modal" data-target="#theModal">
+                        <a href="javascript:void(0)" class="tabmenu bg-dark" data-toggle="modal"
+                            data-target="#theModal">
                             <i class="fas fa-plus"></i>
                             Agregar</a>
                     </li>
@@ -22,32 +23,41 @@
                                 <th width="400px" class="table-th text-white text-center">TAREA</th>
                                 <th width="400px" class="table-th text-white text-center">HORAS ESTIMADAS</th>
                                 <th width="400px" class="table-th text-white text-center">DESCRIPCION</th>
+                                <th width="400px" class="table-th text-white text-center">ESTADO</th>
                                 <th width="400px" class="table-th text-white text-center">ACCIONES</th>
                             </tr>
                         </thead>
                         <tbody>
                             @forelse ($catalogos as $catalogo)
-                                <tr>
-                                    <td>{{ $catalogo->tarea }} </td>
-                                    <td>{{ $catalogo->horas_estimadas }} Horas </td>
-                                    <td>{{ $catalogo->descripcion }} </td>
-
-                                    <td class="text-right">
-                                        <a href="javascript:void(0)" wire:click='edit({{ $catalogo->id }})'
-                                            class="btn btn-dark mtmobile" title="Edit">
-                                            <i class="fas fa-edit"></i>
-                                        </a>
-                                        <a href="javascript:void(0)"
-                                            wire:click="$emit('deletecatalogo', {{ $catalogo->id }}, '{{ $catalogo->tarea }}')"
-                                            class="btn btn-dark " title="Delete">
-                                            <i class="fas fa-trash"></i>
-                                        </a>
-                                    </td>
-                                </tr>
+                            <tr>
+                                <td>{{ $catalogo->tarea }} </td>
+                                <td>{{ $catalogo->horas_estimadas }} Horas </td>
+                                <td>{{ $catalogo->descripcion }} </td>
+                                <td>
+                                    <span
+                                        class="badge {{ $catalogo->disponibilidad ? 'badge-success' : 'badge-info' }} text-uppercase">
+                                        {{ $catalogo->disponibilidad ? 'Disponible' : 'Trabajado' }}
+                                    </span>
+                                </td>
+                                </td>
+                                @if ($catalogo->disponibilidad)
+                                <td class="text-right">
+                                    <a href="javascript:void(0)" wire:click='edit({{ $catalogo->id }})'
+                                        class="btn btn-dark mtmobile" title="Edit">
+                                        <i class="fas fa-edit"></i>
+                                    </a>
+                                    <a href="javascript:void(0)"
+                                        wire:click="$emit('deletecatalogo', {{ $catalogo->id }}, '{{ $catalogo->tarea }}')"
+                                        class="btn btn-dark " title="Delete">
+                                        <i class="fas fa-trash"></i>
+                                    </a>
+                                </td>
+                                @endif
+                            </tr>
                             @empty
-                                <tr>
-                                    <td>No hay datos registrados</td>
-                                </tr>
+                            <tr>
+                                <td>No hay datos registrados</td>
+                            </tr>
                             @endforelse
                         </tbody>
                     </table>
@@ -60,8 +70,8 @@
 </div>
 
 @push('scripts')
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
 
             window.livewire.on('show-modal', msg => {
                 $('#theModal').modal('show')
@@ -101,5 +111,5 @@
 
 
         });
-    </script>
+</script>
 @endpush

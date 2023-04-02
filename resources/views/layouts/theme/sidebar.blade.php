@@ -2,6 +2,24 @@
     <nav id="compactSidebar">
         <ul class="menu-categories">
             <li class="">
+                <a href="{{ route('registroHoras')}}" data-active="false" class="menu-toggle">
+                    <div class="base-menu">
+                        <div class="base-icons">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" class="feather feather-tag">
+                                <path
+                                    d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z">
+                                </path>
+                                <line x1="7" y1="7" x2="7.01" y2="7"></line>
+                            </svg>
+                        </div>
+                        <span>Registro de horas</span>
+                    </div>
+                </a>
+            </li>
+@role('Supervisor')
+            <li class="">
                 <a href="{{route('catalogos')}}" data-active="false" class="menu-toggle">
                     <div class="base-menu">
                         <div class="base-icons">
@@ -19,24 +37,6 @@
                 </a>
             </li>
             <li class="">
-                <a href="{{ route('registroHoras')}}" data-active="false" class="menu-toggle">
-                    <div class="base-menu">
-                        <div class="base-icons">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                stroke-linejoin="round" class="feather feather-tag">
-                                <path
-                                    d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z">
-                                </path>
-                                <line x1="7" y1="7" x2="7.01" y2="7"></line>
-                            </svg>
-                        </div>
-                        <span>Registro de horas</span>
-                    </div>
-                </a>
-            </li>
-
-            <li class="">
                 <a href="{{route('roles')}}" data-active="false" class="menu-toggle">
                     <div class="base-menu">
                         <div class="base-icons">
@@ -52,7 +52,22 @@
                     </div>
                 </a>
             </li>
-
+            <li class="">
+                <a href="#pages" data-active="false" class="menu-toggle">
+                    <div class="base-menu">
+                        <div class="base-icons">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" class="feather feather-pie-chart">
+                                <path d="M21.21 15.89A10 10 0 1 1 8 2.83"></path>
+                                <path d="M22 12A10 10 0 0 0 12 2v10z"></path>
+                            </svg>
+                        </div>
+                        <span>Reportes</span>
+                    </div>
+                </a>
+            </li>
+            @endrole
             <li class="">
                 <a href="{{ route('users') }}" data-active="false" class="menu-toggle">
                     <div class="base-menu">
@@ -70,6 +85,7 @@
                     </div>
                 </a>
             </li>
+
         </ul>
     </nav>
     <div id="compact_submenuSidebar" class="submenu-sidebar"></div>
