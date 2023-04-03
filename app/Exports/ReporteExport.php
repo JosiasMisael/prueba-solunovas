@@ -29,14 +29,16 @@ class ReporteExport implements  FromView, ShouldAutoSize, WithTitle
         $busqueda = $this->reportType ==2 ? 1: 2;
         $user = User::findOrFail($this->userId)->name;
 
-        $data= RegistroHora::with(['user'=>function($query){
+        $data= RegistroHora::with([ 'catalogo','user'=>function($query){
             return $query->role('Empleado')->select('id','name');
         }])
-        ->select( 'user_id','cantidad_horas','estado_horas' ,DB::raw('DATE_FORMAT(fecha, "%d/%m/%Y") as dia'))
+        ->select( 'user_id','cantidad_horas','estado_horas','catalogo_hora_id' ,DB::raw('DATE_FORMAT(fecha, "%d/%m/%Y") as dia'))
         ->whereMonth('fecha',$fechaActual )
         ->where('estado_horas',$busqueda )
         ->where('user_id',$this->userId )
         ->get();
+
+
         return view('reports.horas_reportPro', ['data'=>$data, 'reportType'=>$this->reportType, 'user'=>$user]);
     }
 

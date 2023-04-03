@@ -28,7 +28,7 @@
                             @forelse ($roles as $role)
                             <tr>
                                 <td>{{$role->id}}</td>
-                                <td>{{$role->name}}</td>
+                                <td>{{$role->display_name}}</td>
 
                                 <td class="text-center">
                                     <a href="javascript:void(0)" class="btn btn-dark mtmobile" wire:click='edit({{$role->id}})' title="Editar Rol">

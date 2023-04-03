@@ -46,13 +46,15 @@
                                             wire:click="edit({{ $user->id }})" title="Edit">
                                             <i class="fas fa-edit"></i>
                                         </a>
-                                        @role('Supervisor')
-                                        <a href="javascript:void(0)"
-                                            wire:click="$emit('deleteuser', {{ $user->id }}, '{{ $user->name }}')"
-                                            class="btn btn-dark " title="Delete">
-                                            <i class="fas fa-trash"></i>
-                                        </a>
-                                        @endrole
+                                         @if (Auth::user()->id !== $user->id)
+                                         @role('Supervisor')
+                                         <a href="javascript:void(0)"
+                                             wire:click="$emit('deleteuser', {{ $user->id }}, '{{ $user->name }}')"
+                                             class="btn btn-dark " title="Delete">
+                                             <i class="fas fa-trash"></i>
+                                         </a>
+                                         @endrole
+                                        @endif
                                     </td>
                                 </tr>
                             @empty

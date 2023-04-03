@@ -20,7 +20,7 @@ class PruebaController extends Controller
         ->groupBy('user_id', 'mes')
         ->paginate(4);*/
         $fechaActual = Carbon::now();
-        $data= RegistroHora::with(['user'=>function($query){
+        $data= RegistroHora::with(['catalogo','user'=>function($query){
             return $query->role('Empleado')->select('id','name');
         }])
         ->select( 'user_id','cantidad_horas','estado_horas' ,DB::raw('DATE_FORMAT(fecha, "%d/%m/%Y") as dia'))

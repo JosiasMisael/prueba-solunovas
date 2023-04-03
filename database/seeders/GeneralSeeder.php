@@ -20,8 +20,8 @@ class GeneralSeeder extends Seeder
         Role::truncate();
         CatalogoHora::truncate();
 
-        $adminRol = Role::create(['name'=>'Supervisor']);
-        $empleadoRol = Role::create(['name'=>'Empleado']);
+        $adminRol = Role::create(['name'=>'Supervisor','display_name'=> 'Supervisor']);
+        $empleadoRol = Role::create(['name'=>'Empleado','display_name'=> 'Supervisor']);
 
         $admin = new User;
         $admin->name = "Josias Tacam";

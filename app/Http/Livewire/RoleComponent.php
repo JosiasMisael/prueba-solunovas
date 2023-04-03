@@ -39,7 +39,7 @@ class RoleComponent extends Component
     public function render()
     {
         if (strlen($this->search) > 0) {
-            $roles = Role::where('name', 'like', '%' . $this->search . '%')
+            $roles = Role::where('display_name', 'like', '%' . $this->search . '%')
                 ->where('status', 1)
                 ->orderBy('id', 'desc')
                 ->paginate($this->pagination);
@@ -56,7 +56,7 @@ class RoleComponent extends Component
     public function edit(Role $rol)
     {
         $this->selected_id = $rol->id;
-        $this->nombre = $rol->name;
+        $this->nombre = $rol->display_name;
 
         $this->emit('show-modal', 'show-modal!');
     }
@@ -66,10 +66,10 @@ class RoleComponent extends Component
         $this->validate();
 
         $role = Role::create([
-            'name' => $this->nombre,
+            'display_name' => $this->nombre,
         ]);
         $this->reserUI();
-        $this->emit('role-added', $role->name);
+        $this->emit('role-added', $role->display_name);
     }
 
     public function update()
@@ -78,10 +78,10 @@ class RoleComponent extends Component
         $this->validate();
         $role = Role::findOrFail($this->selected_id);
         $role->Update([
-            'name' => $this->nombre,
+            'display_name' => $this->nombre,
          ]);
         $this->reserUI();
-        $this->emit('role-update', $role->name);
+        $this->emit('role-update', $role->display_name);
     }
 
 

@@ -24,7 +24,7 @@ class RolRequest extends FormRequest
     public function rules()
     {
         return [
-            'nombre'=>'required|min:2|unique:roles,name',
+            'nombre'=>'required|min:2|unique:roles,display_name',
       ];
     }
 
