@@ -1,6 +1,6 @@
 # Prueba Tecnica  -Grupo Perinola -
 
-sistema para llevar que lleva el control de horas de los empleados que laboran de forma freelance
+sistema  que lleva el control de horas de los empleados que laboran de forma freelance
 ### Clonar el Repositorio de git
 
 ```bash
